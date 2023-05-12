@@ -1,0 +1,63 @@
+vk:
+  vk_access_token:
+  vk_service_token:
+  vk_admin_id:
+  another_token:
+  vk_API_version: 5.131
+  group_id:
+  secret_key:
+  OW_access_token:
+
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: vkbot
+  http:
+    multipart:
+      maxFileSize: 1024MB
+      maxRequestSize: 1024MB
+  servlet:
+    multipart:
+      maxFileSize: 1024MB
+      maxRequestSize: 1024MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/ids
+    driverClassName: org.postgresql.Driver
+    username: mihena
+    password: 12354637
+    hikari:
+      connection-timeout: 60000
+      minimum-idle: 10
+      maximum-pool-size: 5
+      idle-timeout: 600000
+      connection-test-query: SELECT 1
+  jpa:
+    properties:
+      hibernate:
+        event.merge.entity_copy_observer: allow
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+        jdbc:
+          batch_size: 50
+
+vkbot:
+  version: 0.1.18
+
+logging:
+  file: file.log
+  level:
+    org:
+      hibernate:
+        SQL: ERROR
+        type: ERROR
+    ru.mihena.VKBot: WARN
+    api.longpoll.bots.methods.impl.VkMethod: WARN

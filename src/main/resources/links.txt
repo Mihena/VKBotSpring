@@ -1,0 +1,2 @@
+https://vk.com/editapp?id=7994115&section=options //вк апи приложения
+https://home.openweathermap.org/api_keys //погода апи

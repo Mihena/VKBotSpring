@@ -1,0 +1,37 @@
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+stages:
+  - package
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .m2/repository
+
+Package project:
+  image: bellsoft/liberica-openjdk-debian
+  stage: package
+  script:
+    - mvn clean
+    - mvn package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
+
+Deploy project:
+  stage: deploy
+  image: docker:latest
+#  when: manual
+  services:
+    - docker:dind
+  script:
+  - sudo systemctl stop vkbot
+  - cd /usr/local/VKBot
+  - rm *.jar
+  - cp -f /home/gitlab-runner/builds/6_9YiTkb/0/mihena-based/vkbot-spring/target/*.jar /usr/local/VKBot/
+  - sudo systemctl start vkbot
